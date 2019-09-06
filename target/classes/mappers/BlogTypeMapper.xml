@@ -44,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="typeName!=null and typeName!=''">
 			where typeName=#{typeName}
 		</if>
+		order by orderNum
 		<if test="start!=null and size!=null">
 			limit #{start},#{size}
 		</if>

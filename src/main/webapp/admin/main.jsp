@@ -11,75 +11,28 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
-
 	function openTab(text,url,iconCls){
-		if($("#tabs").tabs("exists",text)){
-			$("#tabs").tabs("select",text);
-		}else{
-			var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='${pageContext.request.contextPath}/admin/"+url+"'></iframe>";
-			$("#tabs").tabs("add",{
-				title:text,
-				iconCls:iconCls,
-				closable:true,
-				content:content
-			});
-		}
-	}
-	
-	function openPasswordModifyDialog() {
-		$("#dlg").dialog("open").dialog("setTitle", "修改密码");
-	}
-
-	function modifyPassword() {
-		$("#fm").form("submit",{
-			url: "${pageContext.request.contextPath}/admin/blogger/modifyPassword.do",
-			onSubmit: function() {
-				var newPassword = $("#password").val();
-				var newPassword2 = $("#password2").val();
-				if(!$(this).form("validate")) {
-					return false; //验证不通过直接false，即没填
-				} 
-				if(newPassword != newPassword2) {
-					$.messager.alert("系统提示", "两次密码必须填写一致");
-					return false
-				}
-				return true;
-			}, //进行验证，通过才让提交
-			success: function(result) {
-				var result = eval("(" + result + ")"); //将json格式的result转换成js对象
-				if(result.success) {
-					$.messager.alert("系统提示", "密码修改成功，下一次登陆生效");
-					closePasswordModifyDialog();
-				} else {
-					$.messager.alert("系统提示", "密码修改失败");
-					return;
-				} 
-			}
+	if($("#tabs").tabs("exists",text)){
+		$("#tabs").tabs("select",text);
+	}else{
+		var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='${pageContext.request.contextPath}/admin/"+url+"'></iframe>";
+		$("#tabs").tabs("add",{
+			title:text,
+			iconCls:iconCls,
+			closable:true,
+			content:content
 		});
 	}
-	
-	function closePasswordModifyDialog() {
-		$("#password").val(""); //保存成功后将内容置空
-		$("#password2").val("");
-		$("#dlg").dialog("close"); //关闭对话框
-	}
-
-	function refreshSystemCache() {
-		$.post("${pageContext.request.contextPath}/admin/system/refreshSystemCache.do",{},function(result){
+}
+	//刷新系统缓存
+	function refreshSystemCache(){
+		$.post("${pageContext.request.contextPath}/admin/system/refreshSystemCache.do",function(result){
 			if(result.success){
-				$.messager.alert("系统提示","已成功刷新系统缓存！");
+				$.messager.alert("系统提示","刷新缓存成功!");
 			}else{
-				$.messager.alert("系统提示","刷新系统缓存失败！");
+				$.messager.alert("系统提示","刷新缓存失败!请稍后再试试吧.");
 			}
-		},"json");
-	}
-	
-	function logout() {
-		$.messager.confirm("系统提示","您确定要退出系统吗？", function(r){
-			if(r) {
-				window.location.href = "${pageContext.request.contextPath}/admin/blogger/logout.do";
-			}
-		});
+		},"json")
 	}
 </script>
 <style type="text/css">
@@ -138,7 +91,7 @@
 	</div>
 </div>
 <div region="south" style="height: 25px;padding: 5px" align="center">
-	Copyright © 2012-2016 倪升武的SSM博客系统 版权所有
+	Copyright ©2019 Johnny的个人博客系统  版权所有:)
 </div>
 <div id="dlg" class="easyui-dialog" style="width:400px; height:200px; padding:10px 20px" 
 	closed="true" buttons="#dlg-buttons">

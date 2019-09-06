@@ -13,78 +13,35 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 
 <script type="text/javascript">
-	function formatBlogTitle(val,row) {
-		if(val == null) {
-			return "<font color=red>该博客已删除</font>";
-		} else {
-			return "<a href='${pageContext.request.contextPath}/blog/articles/"+val.id+".html' target='_blank'>"+val.title+"</a>";
-		}
-	}
 	
-	function formatState(val,row) {
-		if(val == 0) {
-			return "待审核";
-		} else if(val == 1) {
-			return "审核通过";
-		} else {
-			return "审核未通过";
-		}
-	}
-	
-	function deleteComment() {
-		var selectedRows = $("#dg").datagrid("getSelections");
-		if(selectedRows.length == 0) {
-			$.messager.alert("系统提示", "请选择要删除的评论");
-			return;
-		}
-		var idsStr = [];
-		for(var i = 0; i < selectedRows.length; i++) {
-			idsStr.push(selectedRows[i].id);
-		}
-		var ids = idsStr.join(","); //1,2,3,4
-		$.messager.confirm("系统提示", "<font color=red>您确定要删除选中的这"+selectedRows.length+"条评论么？</font>", function(r) {
-			if(r) {
-				$.post("${pageContext.request.contextPath}/admin/comment/deleteComment.do",
-						{ids: ids}, function(result){
-							if(result.success) {
-								$.messager.alert("系统提示", "评论删除成功！");
-								$("#dg").datagrid("reload");
-							} else {
-								$.messager.alert("系统提示", "评论删除失败！");
-							}
-						}, "json");
-			}
-		});
-	}
-	
-	function reload() {
-		$("#dg").datagrid("reload");
-	}
 </script>
 
 </head>
 
 <body style="margin: 1px; font-family: microsoft yahei">
-<table id="dg" title="评论管理" class="easyui-datagrid" fitColumns="true" pagination="true"
-	url="${pageContext.request.contextPath}/admin/comment/listComment.do" toolbar="#tb">
-	<thead>
-		<tr>
-			<th field="cb" checkbox="true" align="center"></th>
-			<th field="id" width="20" align="center">编号</th>
-			<th field="blog" width="200" align="center" formatter="formatBlogTitle">博客标题</th>
-			<th field="userIp" width="50" align="center">用户的IP</th> 
-			<th field="content" width="200" align="center">评论内容</th> 
-			<th field="commentDate" width="50" align="center">评论日期</th> 
-			<th field="state" width="50" align="center" formatter="formatState">评论状态</th> 
-		</tr>
-	</thead>
+	<table id="dg" title="评论管理" class="easyui-datagrid" fitcolumns="true" pagination="true" rownumbers="true"
+	url="${pageContext.request.contextPath}/admin/comment/list.do" fit="true" toolbar="#tb">
+<thead>
+	<tr>
+		<th field="cb" checkbox="true" align="center"></th>
+		<th field="id" width="20" align="center">编号</th>
+		<th field="userIp" width="200" align="center">用户Ip</th>
+		<th field="content" width="50" align="center">内容</th>
+		<th field="commentDate" width="50" align="center">发表日期</th>
+		<th field="state" width="50" align="center">状态</th>
+		<th field="blogType" width="50" align="center" formatter="formatBlogType">博客类型</th>
+	</tr>
+</thead>
 </table>
-<div id="tb"> 
+<div id="tb">
 	<div>
-		<a href="javascript:deleteComment()" class="easyui-linkbutton" iconCls="icon-ok" plain="true">删除</a> 	
-		<a href="javascript:reload()" class="easyui-linkbutton" iconCls="icon-reload" plain="true">刷新</a>	
+		<a href="javascript:openModifyBlogTab()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改博客</a>
+		<a href="javascript:deleteBlog()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除博客</a>
+	</div>
+	<div>
+		&nbsp;根据标题检索:&nbsp;<input type="text" id="searchByTitle" size="20" onkeydown="if(event.KeyCode=13) searchBlogByTitle()"/>
+		<a href="javascript:searchBlogByTitle()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 	</div>
 </div>
-
 </body>
 </html>

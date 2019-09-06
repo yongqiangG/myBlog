@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.johnny.myBlog.dao.CommentDao">
+	<resultMap type="Comment" id="CommentResult">
+		<result property="id" column="id"></result>
+		<result property="userIp" column="userIp"></result>
+		<result property="content" column="content"></result>
+		<result property="commentDate" column="commentDate"></result>
+		<result property="state" column="state"></result>
+		<!-- 外键 -->
+		<association property="blog" column="blog_id" select="com.johnny.myBlog.dao.BlogDao.getBlogById"></association>
+	</resultMap>
+	<!-- 新增一条评论 -->
+	<insert id="add" useGeneratedKeys="true" keyProperty="id" parameterType="Comment">
+		insert into t_comment values(null,#{userIp},#{content},now(),0,#{blog.id})
+	</insert>
+	<!-- 更新一条评论 -->
+	<update id="update" parameterType="Comment">
+		update t_comment
+		<set>
+			<if test="userIp!=null and userIp!=''">
+				userIp=#{userIp},
+			</if>
+			<if test="content!=null and content!=''">
+				content=#{content},
+			</if>
+			<if test="blog.id!=null and blog.id!=''">
+				blog_id=#{blog.id}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	<!-- 删除一条评论 -->
+	<delete id="delete" parameterType="Integer">
+		delete from t_comment where id=#{id}
+	</delete>
+	<!-- 查询所有评论 -->
+	<select id="getComments" parameterType="Map" resultMap="CommentResult">
+		select * from t_comment order by commentDate desc 
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	<!-- 查询所有评论数量 -->
+	<select id="getCommentsCount" parameterType="Map" resultType="Long">
+		select count(*) from t_comment
+		<where>
+			<if test="userIp!=null and userIp!=''">
+				and userIp=#{userIp}
+			</if>
+			<if test="state!=null and state!=''">
+				and state=#{state}
+			</if>
+			<if test="commentDateStr!=null and commentDateStr!=''">
+				and date_format(commentDate,'%Y年%m月%d日')=#{commentDateStr}
+			</if>
+		</where>
+	</select>
+</mapper>
