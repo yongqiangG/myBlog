@@ -26,8 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="content!=null and content!=''">
 				content=#{content},
 			</if>
-			<if test="blog.id!=null and blog.id!=''">
-				blog_id=#{blog.id}
+			<if test="state!=null">
+				state=#{state}
 			</if>
 		</set>
 		where id=#{id}
@@ -36,9 +36,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delete" parameterType="Integer">
 		delete from t_comment where id=#{id}
 	</delete>
+	<!-- 根据博客Id删除评论 -->
+	<delete id="deleteCommentByBlogId" parameterType="Integer">
+		delete from t_comment where blog_id=#{blog.id}
+	</delete>
 	<!-- 查询所有评论 -->
 	<select id="getComments" parameterType="Map" resultMap="CommentResult">
-		select * from t_comment order by commentDate desc 
+		select * from t_comment 
+		<where>
+			<if test="blog_id!=null">
+				and blog_id=#{blog.id}
+			</if>
+			<if test="state!=null">
+				and state=#{state}
+			</if>
+		</where>
+		order by commentDate desc 
 		<if test="start!=null and size!=null">
 			limit #{start},#{size}
 		</if>

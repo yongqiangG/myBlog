@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.johnny.myBlog.dao.BlogDao;
+import com.johnny.myBlog.dao.CommentDao;
 import com.johnny.myBlog.entity.Blog;
 import com.johnny.myBlog.service.BlogService;
 @Service("blogService")
 public class BlogServiceImpl implements BlogService {
 	@Autowired
 	private BlogDao dao;
+	@Autowired
+	private CommentDao commentDao;
 
 	public List<Blog> getBlogWithoutParam() {
 		return dao.getBlogWithoutParam();
@@ -39,6 +42,8 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	public Integer delete(Integer id) {
+		//先删除对应评论再删除博客
+		commentDao.deleteCommentByBlogId(id);
 		return dao.delete(id);
 	}
 

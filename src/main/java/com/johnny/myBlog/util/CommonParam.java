@@ -7,4 +7,6 @@ package com.johnny.myBlog.util;
 public class CommonParam {
 	/**所有博客类型列表*/
 	public static final String Blog_Type_List = "blogTypeList";
+	/**博主对象*/
+	public static final String Current_User = "currentUser";
 }

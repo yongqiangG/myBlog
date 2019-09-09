@@ -13,51 +13,48 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 
 <script type="text/javascript">
-	function formatBlogTitle(val,row) {
-		if(val == null) {
-			return "<font color=red>该博客已删除</font>";
-		} else {
-			return "<a href='${pageContext.request.contextPath}/blog/articles/"+val.id+".html' target='_blank'>"+val.title+"</a>";
-		}
+	//显示博客标题
+	function formatBlogTitle(val,row){
+		return val.title;
 	}
-	
-	function commentReview(state) {
+	//提交审核结果
+	function commentReview(state){
 		var selectedRows = $("#dg").datagrid("getSelections");
-		if(selectedRows.length == 0) {
-			$.messager.alert("系统提示", "请选择要审核的评论");
+		if(selectedRows.length==0){
+			$.messager.alert("系统提示","请至少选择一条数据进行操作");
 			return;
 		}
-		var idsStr = [];
-		for(var i = 0; i < selectedRows.length; i++) {
-			idsStr.push(selectedRows[i].id);
+		var strIds = [];
+		for(var i=0;i<selectedRows.length;i++){
+			strIds.push(selectedRows[i].id);
 		}
-		var ids = idsStr.join(","); //1,2,3,4
-		$.messager.confirm("系统提示", "<font color=red>您确定如此审核选中的"+selectedRows.length+"条数据吗？</font>", function(r) {
-			if(r) {
+		var ids = strIds.join(",");
+		$.messager.confirm("系统提示","您确定要提交这<font color=red>"+selectedRows.length+"</font>条评论的审核吗?",function(r){
+			if(r){
 				$.post("${pageContext.request.contextPath}/admin/comment/review.do",
-						{ids: ids, state: state}, 
+						{"ids":ids,"state":state},
 						function(result){
-							if(result.success) {
-								$.messager.alert("系统提示", "评论审核成功！");
+							if(result.success){
+								$.messager.alert("系统提示","提交成功");
 								$("#dg").datagrid("reload");
-							} else {
-								$.messager.alert("系统提示", "评论审核失败！");
+							}else{
+								$.messager.alert("系统提示","提交失败,请稍后再试试吧");
 							}
-						}, "json");
+						},
+						"json"
+				)
 			}
-		});
+		})
 	}
-	
-	function reload() {
-		$("#dg").datagrid("reload");
-	}
+
+
 </script>
 
 </head>
 
 <body style="margin: 1px; font-family: microsoft yahei">
-<table id="dg" title="评论审核管理" class="easyui-datagrid" fitColumns="true" pagination="true"
-	url="${pageContext.request.contextPath}/admin/comment/listComment.do?state=0" toolbar="#tb">
+<table id="dg" title="评论审核" class="easyui-datagrid" fitColumns="true" pagination="true"
+	url="${pageContext.request.contextPath}/admin/comment/list.do?state=0" toolbar="#tb">
 	<thead>
 		<tr>
 			<th field="cb" checkbox="true" align="center"></th>
@@ -71,9 +68,8 @@
 </table>
 <div id="tb"> 
 	<div>
-		<a href="javascript:commentReview(1)" class="easyui-linkbutton" iconCls="icon-ok" plain="true">审核通过</a>
-		<a href="javascript:commentReview(2)" class="easyui-linkbutton" iconCls="icon-no" plain="true">审核不通过</a>	
-		<a href="javascript:reload()" class="easyui-linkbutton" iconCls="icon-reload" plain="true">刷新</a>	
+		<a href="javascript:commentReview(1)" class="easyui-linkbutton" iconCLs="icon-ok" plain="true">审核通过</a>
+		<a href="javascript:commentReview(2)" class="easyui-linkbutton" iconCls="icon-no" plain="true">审核不通过</a>
 	</div>
 </div>
 

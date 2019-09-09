@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.johnny.myBlog.entity.Blogger;
 import com.johnny.myBlog.service.BloggerService;
+import com.johnny.myBlog.util.CommonParam;
 
 public class MyRealm extends AuthorizingRealm {
 	@Autowired
@@ -36,7 +37,7 @@ public class MyRealm extends AuthorizingRealm {
 		Blogger blogger = bloggerService.getBloggerByUserName(userName);
 		if(blogger!=null) {
 			//将用户信息放入session,所有地方都可以取
-			SecurityUtils.getSubject().getSession().setAttribute("currentUser", blogger);
+			SecurityUtils.getSubject().getSession().setAttribute(CommonParam.Current_User, blogger);
 			AuthenticationInfo authenInfo = new SimpleAuthenticationInfo(blogger.getUserName(), blogger.getPassword(), getName());
 			return authenInfo;
 		}

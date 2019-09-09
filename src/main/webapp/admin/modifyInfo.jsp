@@ -6,108 +6,105 @@
 <head>
 <title>写博客页面</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/demo.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor1_4_3_3/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor1_4_3_3/ueditor.all.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor1_4_3_3/lang/zh-cn/zh-cn.js"></script>
-
+<script type="text/javascript" charset="utf-8"
+	src="${pageContext.request.contextPath}/static/ueditor1_4_3_3/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="${pageContext.request.contextPath}/static/ueditor1_4_3_3/ueditor.all.min.js">
+	
+</script>
+<!--建议手动加载语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8"
+	src="${pageContext.request.contextPath}/static/ueditor1_4_3_3/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
-	function submitData() {
+	//个人信息提交
+	function submitData(){
+		//取值
+		var nickName = $("#nickName").val();
+		var sign = $("#sign").val();
+		var profile = UE.getEditor("editor").getContent();
+		if(nickName==null || nickName==""){
+			$.messager.alert("系统提示","请输入昵称");
+		}else if(sign==null || sign==""){
+			$.messager.alert("系统提示","请输入个性签名");
+		}else if(profile==null || profile==""){
+			$.messager.alert("系统提示","请输入个人简介");
+		} else {
+			$("#profile").val(profile);
+			$("#form1").submit();
+		}
 		
-		$("#fm").form("submit",{
-			url: "${pageContext.request.contextPath}/admin/blogger/save.do",
-			onSubmit: function() {
-				var profile = UE.getEditor("profile").getContent();
-				$("#pf").val(profile); //将UEditor编辑器中的内容放到隐藏域中提交到后台
-				return $(this).form("validate");
-			}, //进行验证，通过才让提交
-			success: function(result) {
-				var result = eval("(" + result + ")"); //将json格式的result转换成js对象
-				if(result.success) {
-					$.messager.alert("系统提示", "博主信息更新成功");
-				} else {
-					$.messager.alert("系统提示", "博主信息更新失败");
-					return;
-				} 
-			}
-		});
+		
 	}
+		
+
 </script>
 </head>
 
 <body style="margin: 10px; font-family: microsoft yahei">
-
-	<div id="p" class="easyui-panel" title="修改个人信息" style="padding: 10px;">
-		<form id="fm" method="post" enctype="multipart/form-data">
-			<table cellspacing="20px">
-				<tr>
-					<td width="80px">用户名：</td>				
-					<td>
-						<input type="hidden" id="id" name="id" value="${blogger.id }"/>
-						<input type="text" id="username" name="username" style="width:200px" readonly="readonly" value="${blogger.username }"/>
-					</td>
-				</tr>
-				<tr>
-					<td>昵称：</td>
-					<td>
-						<input type="text" id="nickname" name="nickname" style="width:200px" 
-							class="easyui-validatebox" required="true"/>
-					</td>
-				</tr>
-				<tr>
-					<td>个性签名：</td>
-					<td>
-						<input type="text" id="sign" name="sign" style="width:400px" 
-							class="easyui-validatebox" required="true""/>
-					</td>
-				</tr>
-				<tr>
-					<td>个人头像：</td>
-					<td>
-						<input type="file" id="imageFile" name="imageFile"/>
-					</td>
-				</tr>
-				<tr>
-					<td>个人简介：</td>
-					<td>
-						<script id="profile" type="text/plain" style="width:80%; height:500px;"></script>
-						<input type="hidden" id="pf" name="profile"> <%-- UEditor不能作为表单的一部分提交，所以用这种隐藏域的方式 --%>
-					</td>
-				</tr>
-				<tr>
-				<td></td>
-				<td><a href="javascript:submitData()" class="easyui-linkbutton"
-					data-options="iconCls:'icon-submit'">提交</a></td>
-			</tr>
-			</table>
-		</form>
-	</div>
-
-<%-- 实例化编辑器 --%>
+<div id="p" class="easyui-panel" title="修改个人信息" style="padding: 10px">
+<form id="form1" action="${pageContext.request.contextPath}/admin/blogger/save.do" method="post" enctype="multipart/form-data">
+<input type="hidden" id="id" name="id" value="${currentUser.id}">
+<input type="hidden" id="profile" name="profile" value="${currentUser.profile}">
+<table cellspacing="20px">
+	<tr>
+		<td width="80px">用户名</td>
+		<td><input type="text" id="userName" name="userName" style="width:200px;" value="${currentUser.userName}" readonly="readonly"/></td>
+	</tr>
+	<tr>
+		<td width="80px">昵称</td>
+		<td><input type="text" id="nickName" name="nickName" style="width:200px;" value="${currentUser.nickName}"/></td>
+	</tr>
+	<tr>
+		<td width="80px">个性签名</td>
+		<td><input type="text" id="sign" name="sign" style="width:400px;" value="${currentUser.sign}"/></td>
+	</tr>
+	<tr>
+		<td width="80px">个人头像</td>
+		<td><input type="file" id="imageFile" name="imageFile" style="width:400px;"/></td>
+	</tr>
+	<tr>
+		<td>个人简介</td>
+		<td>
+			<script type="text/plain" id="editor" style="width:100%;height:500px;"></script>
+		</td>
+	</tr>
+	
+	<tr>
+		<td></td>
+		<td><a href="javascript:submitData()" class="easyui-linkbutton" data-options="iconCls:'icon-submit'">提交修改</a></td>
+	</tr>
+	
+</table>
+</form>
+</div>
 <script type="text/javascript">
-	var ue = UE.getEditor('profile');
-	ue.addListener("ready", function(){
-		//通过UE自己封装的ajax请求数据
-		UE.ajax.request("${pageContext.request.contextPath}/admin/blogger/findBlogger.do",
-				{
-					method: "post",
-					async: false,
-					data: {},
-					onsuccess: function(result) { //
-						result = eval("(" + result.responseText + ")");
-						$("#nickname").val(result.nickname);
-						$("#sign").val(result.sign);
-						UE.getEditor('profile').setContent(result.profile);
+	//实例化编辑器
+	var ue = UE.getEditor("editor");
+	ue.addListener("ready",function(){
+		UE.ajax.request("${pageContext.request.contextPath}/admin/blogger/find.do",{
+					method:"post",
+					async:false,
+					data:{},
+					onsuccess:function(result){
+						result = eval("("+result.responseText+")");
+						UE.getEditor("editor").setContent(result.profile);
 					}
-				});
+		})
+		
+		
 	});
 </script>
-
 </body>
 </html>

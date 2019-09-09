@@ -56,7 +56,7 @@
 	function closeLinkDialog() {
 		$("linkname").val(""); //保存成功后将内容置空
 		$("linkurl").val("");
-		$("order").val("");
+		$("orderNum").val("");
 		$("#dlg").dialog("close"); //关闭对话框
 	}
 	
@@ -99,14 +99,14 @@
 
 <body style="margin: 1px; font-family: microsoft yahei">
 <table id="dg" title="友情链接管理" class="easyui-datagrid" fitColumns="true" pagination="true"
-	url="${pageContext.request.contextPath}/admin/link/listLink.do" toolbar="#tb">
+	url="${pageContext.request.contextPath}/admin/link/list.do" toolbar="#tb">
 	<thead>
 		<tr>
 			<th field="cb" checkbox="true" align="center"></th>
 			<th field="id" width="20" align="center">编号</th>
 			<th field="linkname" width="100" align="center">友情链接名称</th>
 			<th field="linkurl" width="200" align="center">友情链接地址</th> 
-			<th field="order" width="50" align="center">友情链接序号</th> 
+			<th field="orderNum" width="50" align="center">友情链接序号</th> 
 		</tr>
 	</thead>
 </table>
@@ -138,7 +138,7 @@
 			<tr>
 				<td>友情链接排序</td>
 				<td>
-					<input type="text" id="order" name="order" class="easyui-numberbox" required="true" 
+					<input type="text" id="orderNum" name="orderNum" class="easyui-numberbox" required="true" 
 						style="width:60px">&nbsp;(友情链接会根据序号从小到大排列)
 				</td>
 			</tr>

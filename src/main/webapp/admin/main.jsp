@@ -34,6 +34,57 @@
 			}
 		},"json")
 	}
+	//打开修改密码对话框
+	function openPasswordModifyDialog(){
+		$("#dlg").dialog("open").dialog("setTitle","修改密码");
+		url="${pageContext.request.contextPath}/admin/system/modifyPassword.do";
+	}
+	//关闭修改密码对话框
+	function closePasswordModifyDialog(){
+		$("password").val("");
+		$("password2").val("");
+		$("#dlg").dialog("close"); //关闭对话框
+	}
+	//修改密码
+	function modifyPassword(){
+		//页面校验
+		var userName = $("#userName").val();
+		var password = $("#password").val();
+		var password2 = $("#password2").val();
+		if(userName==null || userName==''){
+			$("#err_msg").html("用户名不能为空");
+			return;
+		}
+		if(password==null || password==''){
+			$("#err_msg").html("新密码不能为空");
+			return;
+		}
+		if(password2==null || password2==''){
+			$("#err_msg").html("确认新密码不能为空");
+			return;
+		}
+		if(password!=password2){
+			$("#err_msg").html("两次输入密码不一致");
+			return;
+		}
+		$("#fm").form("submit",{
+			url: url,
+			onSubmit: function() {
+				return true;
+			}, 
+			success: function(result) {
+				var result = eval("(" + result + ")"); //将json格式的result转换成js对象
+				if(result.success) {
+					$.messager.alert("系统提示", "密码修改成功");
+					closePasswordModifyDialog();
+				} else {
+					$.messager.alert("系统提示", "密码修改失败");
+					return;
+				} 
+			}
+		});
+		
+	}
 </script>
 <style type="text/css">
 	body {
@@ -100,7 +151,7 @@
 			<tr>
 				<td>用户名</td>
 				<td>
-					<input type="text" id="userName" name="userName" value="${blogger.userName }" readonly="readonly">
+					<input type="text" id="userName" name="userName" value="${currentUser.userName }" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -117,6 +168,7 @@
 						required="true" style="width:200px">
 				</td>
 			</tr>
+			<span id="err_msg" style="color:red;"></span>
 		</table>
 	</form>
 </div>

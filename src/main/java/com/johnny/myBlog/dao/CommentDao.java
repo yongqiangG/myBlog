@@ -26,4 +26,6 @@ public interface CommentDao {
 	public Long getCommentsCount(Map<String,Object> map);
 	/**删除一条评论*/
 	public Integer delete(Integer id);
+	/**根据博客ID删除评论*/
+	public Integer deleteCommentByBlogId(Integer blogId);
 }

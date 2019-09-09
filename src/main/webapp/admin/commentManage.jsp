@@ -13,6 +13,49 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 
 <script type="text/javascript">
+	//显示博客标题
+	function formatBlogTitle(val,row){
+		return val.title;
+	}
+	//显示评论状态
+	function formatState(val,row){
+		if(val==0){
+			return "待审核";
+		}else if(val==1){
+			return "审核通过";
+		}else{
+			return "审核未通过";
+		}
+	}
+	//删除评论
+	function deleteComment(){
+		var selectedRows = $("#dg").datagrid("getSelections");
+		if(selectedRows.length==0){
+			$.messager.alert("系统提示","请至少选择一条评论进行删除");
+			return;
+		}
+		var strIds = [];
+		for(var i=0;i<selectedRows.length;i++){
+			strIds.push(selectedRows[i].id);
+		}
+		var ids = strIds.join(",");
+		$.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条评论吗?",function(r){
+			if(r){
+				$.post("${pageContext.request.contextPath}/admin/comment/delete.do",
+						{"ids":ids},
+						function(result){
+							if(result.success){
+								$.messager.alert("系统提示","删除成功");
+								$("#dg").datagrid("reload");
+							}else{
+								$.messager.alert("系统提示","删除失败,请稍后再试吧");
+							}
+						},"json"
+				)
+			}
+		})
+		
+	}
 	
 </script>
 
@@ -25,22 +68,17 @@
 	<tr>
 		<th field="cb" checkbox="true" align="center"></th>
 		<th field="id" width="20" align="center">编号</th>
-		<th field="userIp" width="200" align="center">用户Ip</th>
-		<th field="content" width="50" align="center">内容</th>
-		<th field="commentDate" width="50" align="center">发表日期</th>
-		<th field="state" width="50" align="center">状态</th>
-		<th field="blogType" width="50" align="center" formatter="formatBlogType">博客类型</th>
+		<th field="blog" width="200" align="center" formatter="formatBlogTitle">博客标题</th>
+		<th field="userIp" width="100" align="center">用户Ip</th>
+		<th field="content" width="200" align="center">内容</th>
+		<th field="commentDate" width="50" align="center">评论日期</th>
+		<th field="state" width="50" align="center" formatter="formatState">评论状态</th>
 	</tr>
 </thead>
 </table>
 <div id="tb">
 	<div>
-		<a href="javascript:openModifyBlogTab()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改博客</a>
-		<a href="javascript:deleteBlog()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除博客</a>
-	</div>
-	<div>
-		&nbsp;根据标题检索:&nbsp;<input type="text" id="searchByTitle" size="20" onkeydown="if(event.KeyCode=13) searchBlogByTitle()"/>
-		<a href="javascript:searchBlogByTitle()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+		<a href="javascript:deleteComment()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除评论</a>
 	</div>
 </div>
 </body>

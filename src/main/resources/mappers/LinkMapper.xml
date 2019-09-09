@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.johnny.myBlog.dao.LinkDao">
+	<resultMap type="Link" id="LinkResult">
+		<result property="id" column="id"></result>
+		<result property="linkname" column="linkname"></result>
+		<result property="linkurl" column="linkurl"></result>
+		<result property="orderNum" column="orderNum"></result>
+	</resultMap>
+	<!-- 带参数查询所有链接 -->
+	<select id="getLink" parameterType="Map" resultMap="LinkResult">
+		select * from t_link 
+		order by orderNum 
+		limit #{start},#{size}
+	</select>
+	<!-- 带参数查询链接总数 -->
+	<select id="getLinkCount" parameterType="Map" resultType="Long">
+		select count(*) from t_link
+		<where>
+			<if test="linkname!=null and linkname!=''">
+			and linkname=#{linkname}
+			</if>
+			<if test="linkurl!=null and linkurl!=''">
+			and linkurl=#{linkurl}
+			</if>
+			<if test="orderNum!=null and orderNum!=''">
+			and orderNum=#{orderNum}
+			</if>
+		</where>
+	</select>
+	<!-- 新增一条链接 -->
+	<insert id="add" parameterType="Link">
+		insert into t_link values(null,#{linkname},#{linkurl},#{orderNum})
+	</insert>
+	<!-- 删除一条链接 -->
+	<delete id="delete" parameterType="Integer">
+		delete from t_link where id=#{id}
+	</delete>
+	<!-- 更新一条链接 -->
+	<update id="update" parameterType="Link">
+		update t_link
+		<set>
+			<if test="linkname!=null and linkname!=''">
+			linkname=#{linkname},
+			</if>
+			<if test="linkurl!=null and linkurl!=''">
+			linkurl=#{linkurl},
+			</if>
+			<if test="orderNum!=null and orderNum!=''">
+			orderNum=#{orderNum}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+</mapper>
