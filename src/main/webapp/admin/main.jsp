@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>    
-<title>SSM个人博客系统后台管理页面</title>   
+<title>Johnny的博客后台管理</title>   
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
@@ -85,6 +85,13 @@
 		});
 		
 	}
+	function logout(){
+		$.messager.confirm("系统提示","您确定要退出博客后台管理吗?",function(r){
+			if(r){
+				window.location.href="${pageContext.request.contextPath}/admin/system/logout.do"
+			}
+		})
+	}
 </script>
 <style type="text/css">
 	body {
@@ -98,7 +105,7 @@
 	<table style="padding: 5px" width="100%">
 		<tr>
 			<td width="50%">
-				<h2>博客后台系统</h2>
+				<h2>Johnny的博客后台管理</h2>
 			</td>
 			<td valign="bottom" align="right" width="50%">
 				<font size="3">&nbsp;&nbsp;<strong>欢迎：</strong>${currentUser.userName }</font>
@@ -109,7 +116,7 @@
 <div region="center">
 	<div class="easyui-tabs" fit="true" border="false" id="tabs">
 		<div title="首页" data-options="iconCls:'icon-home'">
-			<div align="center" style="padding-top: 100px"><font color="red" size="10">欢迎使用</font></div>
+			<div align="center" style="padding-top: 100px"><font color="red" size="10">欢迎使用Johnny的博客后台管理</font></div>
 		</div>
 	</div>
 </div>

@@ -29,4 +29,10 @@ public interface BlogService {
 	
 	/**根据博客类型查询对应的博客数量*/
 	public Integer getBlogCountByBlogType(Integer blogTypeId);
+	
+	/**上一篇*/
+	public Blog getPreviousBlog(Integer id); 
+	
+	/**下一篇*/
+	public Blog getNextBlog(Integer id);
 }

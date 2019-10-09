@@ -13,9 +13,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 
 <script type="text/javascript">
-	//显示博客标题
+	//点击标题弹出用户预览页面
 	function formatBlogTitle(val,row){
-		return val.title;
+		return "<a target='_blank' href='${pageContext.request.contextPath}/article/"+val.id+".html'>"+val.title+"</a>";
 	}
 	//提交审核结果
 	function commentReview(state){

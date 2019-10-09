@@ -52,6 +52,16 @@ public class BlogServiceImpl implements BlogService {
 		return dao.getBlogCountByBlogType(blogTypeId);
 	}
 
+	@Override
+	public Blog getPreviousBlog(Integer id) {
+		return dao.getPreviousBlog(id);
+	}
+
+	@Override
+	public Blog getNextBlog(Integer id) {
+		return dao.getNextBlog(id);
+	}
+
 	
 
 }

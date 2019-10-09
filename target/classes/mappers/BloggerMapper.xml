@@ -38,5 +38,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</set>
 		where id=#{id}
 	</update>
+	<!-- 获取博主信息 -->
+	<select id="getBlogger" resultMap="BloggerResult">
+		select * from t_blogger
+		limit 1
+	</select>
 	
 </mapper>

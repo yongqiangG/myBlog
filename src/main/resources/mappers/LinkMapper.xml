@@ -13,7 +13,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getLink" parameterType="Map" resultMap="LinkResult">
 		select * from t_link 
 		order by orderNum 
-		limit #{start},#{size}
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
 	</select>
 	<!-- 带参数查询链接总数 -->
 	<select id="getLinkCount" parameterType="Map" resultType="Long">

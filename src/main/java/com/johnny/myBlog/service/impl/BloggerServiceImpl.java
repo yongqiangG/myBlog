@@ -21,4 +21,9 @@ public class BloggerServiceImpl implements BloggerService {
 		return bloggerDao.updateBlogger(blogger);
 	}
 
+	@Override
+	public Blogger getBlogger() {
+		return bloggerDao.getBlogger();
+	}
+
 }

@@ -1,213 +1,247 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/blog.css">
-<script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
-<title>博客主页</title>
-<style type="text/css">
-	body{
-		padding-top:10px;
-		padding-bottom:40px;
-		background-color: #F8F8FF;
-		font-family: microsoft yahei;
-	}
-</style>
-</head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Johnny's Blog</title>
+<!-- Bootstrap core CSS -->
+  <link href="${pageContext.request.contextPath}/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+  <!-- Custom fonts for this template -->
+  <link href="${pageContext.request.contextPath}/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="${pageContext.request.contextPath}/static/css/clean-blog.min.css" rel="stylesheet">
+  <script src="${pageContext.request.contextPath}/static/vendor/jquery/jquery.min.js"></script>
+  <script>
+  	function checkData(){
+  		var q = $("#q").val().trim();
+  		if(q==null||q==''){
+  			alert("请输入您要查询的关键字");
+  			return false;
+  		}
+  		return true;
+  	}
+  </script>
+</head>
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4">
-				<div class="blog"><strong>倪升武的博客</strong></div>
-			</div>
-			<div class="col-md-8">
-				<iframe style="float:right" width="420" scrolling="no" height="60" frameborder="0"
-					allowtransparency="true"
-					src="http://i.tianqi.com/index.php?c=code&id=12&icon=1&num=5"></iframe>
-			</div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="${pageContext.request.contextPath}/index.html">Johnny 高永强</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/blogger/aboutMe.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('static/img/team.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Johnny's Blog</h1>
+            <span class="subheading">与你分享生活的喜悦</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+      	<div style="float:right;">
+      	<form action="${pageContext.request.contextPath}/q.html" method="post" onsubmit="return checkData()">
+      		<h5>全文检索</h5>
+	        <input type="text" id="q" name="q" value="${q}" placeholder="请输入要查询的关键字">
+	        <button type="submit" class="btn btn-primary">搜索</button>
+	    </form>
+	    </div>
+      	<div>
+      		<h5>博客日期</h5>
+			<ul>						
+				<c:forEach items="${blogCountList}" var="blog">							
+					<li><span><a href="${pageContext.request.contextPath}/index.do?releaseDateStr=${blog.releaseDateStr}">${blog.releaseDateStr}（${blog.blogCount }）</a></span></li>						
+				</c:forEach>						
+			</ul>
 		</div>
-		
-		<div class="row" style="padding-top: 10px">
-			<div class="col-md-12">
-				<nav class="navbar navbar-default">
-				  <div class="container-fluid">				    
-				    <!-- Collect the nav links, forms, and other content for toggling -->
-				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				      <ul class="nav navbar-nav">
-				      	<li class="active"><a class="navbar-brand" href="#">博客首页</a></li>
-				        <li><a class="navbar-brand" href="#">关于博主</a></li>
-				        <li><a class="navbar-brand" href="#">我的相册</a></li>
-				        <li><a class="navbar-brand" href="#">资源小站</a></li>
-				        <li><a class="navbar-brand" href="#">程序人生</a></li>
-				        <li><a class="navbar-brand" href="#">CSDN</a></li>
-				      </ul>
-				      <form class="navbar-form navbar-right" role="search">
-				        <div class="form-group">
-				          <input type="text" class="form-control" placeholder="请输入要查询的关键字">
-				        </div>
-				        <button type="submit" class="btn btn-default">搜索</button>
-				      </form>
-				    </div><!-- /.navbar-collapse -->
-				  </div><!-- /.container-fluid -->
-				</nav>
-			</div>
+		<div>
+      		<h5>博客类别</h5>
+			<ul>						
+				<c:forEach items="${blogTypeList}" var="blog">							
+					<li><span><a href="${pageContext.request.contextPath}/index.do?type_id=${blog.id}">${blog.typeName }（${blog.blogCount }）</a></span></li>						
+				</c:forEach>						
+			</ul>
 		</div>
-		
-		<div class="row">	
-		  <div class="col-md-3">
-		  	<div class="data_list">
-				<div class="data_list_title">
-					<img src="${pageContext.request.contextPath}/static/images/user_icon.png"/>
-					博主信息
-				</div>
-				<div class="user_image">
-					<img src="${pageContext.request.contextPath}/static/userImages/${blogger.imagename}"/>
-				</div>
-				<div class="nickName">${blogger.nickname }</div>
-				<div class="userSign">${blogger.sign }</div>
-			</div>	
-			
-			<div class="data_list">
-				<div class="data_list_title">
-					<img src="${pageContext.request.contextPath}/static/images/byType_icon.png"/>
-					文章分类
-				</div>
-				<div class="datas">
-					<ul>						
-							<c:forEach items="${blogTypeList }" var="blogType">
-								<li><span><a href="#">${blogType.typeName }（${blogType.blogCount }）</a></span></li>		
-							</c:forEach>					
-					</ul>
-				</div>
-			</div>
-			
-			<div class="data_list">
-				<div class="data_list_title">
-					<img src="${pageContext.request.contextPath}/static/images/byDate_icon.png"/>
-					文章存档
-				</div>
-				<div class="datas">
-					<ul>						
-							<c:forEach items="${blogList }" var="blog">							
-								<li><span><a href="#">${blog.releaseDateStr }（${blog.blogCount }）</a></span></li>						
-							</c:forEach>						
-					</ul>
-				</div>
-			</div>
-			
-			<div class="data_list">
-				<div class="data_list_title">
-					<img src="${pageContext.request.contextPath}/static/images/link_icon.png"/>
-					友情链接
-				</div>
-				<div class="datas">
-					<ul>						
-						<c:forEach items="${linkList }" var="link">
-							<li><span><a href="${link.linkurl }" target="_blank">${link.linkname }</a></span></li>
-						</c:forEach>											
-					</ul>
-				</div>
-			</div>
-			
-			  	
-		  </div>
-		  	  
-		  <div class="col-md-9">
-		  	<div class="data_list">
-		  		<div class="data_list_title">
-					<img src="${pageContext.request.contextPath}/static/images/list_icon.png"/>&nbsp;最新博客
-				</div>	
-				<div class="datas">
-					<ul>
-														
-						<li style="margin-bottom: 30px">
-						  	<span class="title">
-						  		<img alt="文章类型" src="${pageContext.request.contextPath}/static/userImages/yuan.jpg">
-						  		<a href="#">这是一篇测试博客</a>
-						  	</span>
-						  	<span class="summary">摘要: 这是用来测试的静态数据，为了多搞一点数据，于是我开始喋喋不休的说一些废话，包括我很帅之类的，虽然我一直强调自己要低调，但不知为何，自己的容颜非得和内心背道而驰....</span>
-						  	<span class="img">
-						  		
-							  		<a href="#"><img src="${pageContext.request.contextPath}/static/userImages/dog.jpg" title="dog" alt="dog.jpg" width="823" height="489" style="width: 823px; height: 489px;"></a>
-							  		<a href="#"><img src="${pageContext.request.contextPath}/static/userImages/dog.jpg" title="dog" alt="dog.jpg" width="823" height="489" style="width: 823px; height: 489px;"></a>
-							  		<a href="#"><img src="${pageContext.request.contextPath}/static/userImages/dog.jpg" title="dog" alt="dog.jpg" width="823" height="489" style="width: 823px; height: 489px;"></a>
-							  		&nbsp;&nbsp;
-						  		
-						  	</span>
-						  	<span class="info">
-						  		<font color="#999">2016-07-03 10:39</font> &nbsp;&nbsp;
-						  		<font color="#33a5ba"><a href="#">阅读</a><font color="#999">(404)</font>&nbsp;&nbsp;</font>
-						  		<font color="#33a5ba"><a href="#">评论</a><font color="#999">(8)</font>&nbsp;&nbsp;</font>  	
-						  	</span>
-						</li>
-						<hr style="height:5px;border:none;border-top:1px dashed gray;padding-bottom:10px;" />													
-						
-						<li style="margin-bottom: 30px">
-						  	<span class="title">
-						  		<img alt="文章类型" src="${pageContext.request.contextPath}/static/userImages/yuan.jpg">
-						  		<a href="#">这是一篇测试博客</a>
-						  	</span>
-						  	<span class="summary">摘要: 这是用来测试的静态数据，为了多搞一点数据，于是我开始喋喋不休的说一些废话，包括我很帅之类的，虽然我一直强调自己要低调，但不知为何，自己的容颜非得和内心背道而驰....</span>
-						  	<span class="img">
-						  		
-							  		<a href="#"><img src="${pageContext.request.contextPath}/static/userImages/dog.jpg" title="dog.jpg" alt="dog.jpg" width="823" height="489" style="width: 823px; height: 489px;"></a>
-							  		<a href="#"><img src="${pageContext.request.contextPath}/static/userImages/dog.jpg" title="dog.jpg" alt="dog.jpg" width="823" height="489" style="width: 823px; height: 489px;"></a>
-							  		<a href="#"><img src="${pageContext.request.contextPath}/static/userImages/dog.jpg" title="dog.jpg" alt="dog.jpg" width="823" height="489" style="width: 823px; height: 489px;"></a>
-							  		&nbsp;&nbsp;
-						  		
-						  	</span>
-						  	<span class="info">
-						  		<font color="#999">2016-07-03 10:39</font> &nbsp;&nbsp;
-						  		<font color="#33a5ba"><a href="#">阅读</a><font color="#999">(404)</font>&nbsp;&nbsp;</font>
-						  		<font color="#33a5ba"><a href="#">评论</a><font color="#999">(8)</font>&nbsp;&nbsp;</font>	  	
-						  	</span>
-						</li>
-						<hr style="height:5px;border:none;border-top:1px dashed gray;padding-bottom:10px;" />													
-						
-						<li style="margin-bottom: 30px">
-						  	<span class="title">
-						  		<img alt="文章类型" src="${pageContext.request.contextPath}/static/userImages/yuan.jpg">
-						  		<a href="#">这是一篇测试博客</a>
-						  	</span>
-						  	<span class="summary">摘要: 这是用来测试的静态数据，为了多搞一点数据，于是我开始喋喋不休的说一些废话，包括我很帅之类的，虽然我一直强调自己要低调，但不知为何，自己的容颜非得和内心背道而驰....</span>
-						  	<span class="img">
-						  		
-							  		<a href="#"><img src="${pageContext.request.contextPath}/static/userImages/dog.jpg" title="dog.jpg" alt="dog.jpg" width="823" height="489" style="width: 823px; height: 489px;"></a>
-							  		<a href="#"><img src="${pageContext.request.contextPath}/static/userImages/dog.jpg" title="dog.jpg" alt="dog.jpg" width="823" height="489" style="width: 823px; height: 489px;"></a>
-							  		<a href="#"><img src="${pageContext.request.contextPath}/static/userImages/dog.jpg" title="dog.jpg" alt="dog.jpg" width="823" height="489" style="width: 823px; height: 489px;"></a>
-							  		&nbsp;&nbsp;
-						  		
-						  	</span>
-						  	<span class="info">
-						  		<font color="#999">2016-07-03 10:39</font> &nbsp;&nbsp;
-						  		<font color="#33a5ba"><a href="#">阅读</a><font color="#999">(404)</font>&nbsp;&nbsp;</font>
-						  		<font color="#33a5ba"><a href="#">评论</a><font color="#999">(8)</font>&nbsp;&nbsp;</font>  	
-						  	</span>
-						</li>
-						<hr style="height:5px;border:none;border-top:1px dashed gray;padding-bottom:10px;" />													
-					</ul>
-				</div>  		
-		  	</div>
-		  </div>
-		  
+		<hr>
+      	<!-- 在这里加载博客列表 -->
+      	<div>
+      		<jsp:include page="${mainPage}"></jsp:include>
+      	</div>
+      	
+		<div>
+			<h5>友情链接</h5>
+			<ul>						
+				<c:forEach items="${linkList }" var="link">
+					<li><span><a href="${link.linkurl}" target="_blank">${link.linkname }</a></span></li>
+				</c:forEach>											
+			</ul>
 		</div>
-		
-		<div class="row">
-			<div class="col-md-12" >
-				<div class="footer" align="center" style="padding-top: 120px" >
-					<font>Copyright © 2012-2016 倪升武SSM个人博客系统 版权所有</font>
-					  
-				</div>
-			</div>			
-		</div>
-	</div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-qq fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-zhihu fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://github.com/yongqiangG">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy; Johnny 高永强 2019</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="${pageContext.request.contextPath}/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="${pageContext.request.contextPath}/static/js/clean-blog.min.js"></script>
+  <script type="text/javascript">
+  	//加载博客列表
+  	/* $(function(){
+  		$.ajax({
+  			url:"${pageContext.request.contextPath}/admin/blog/list.do",
+  			type:"post",
+  			data:{"page":1,"rows":3},
+  			dataType:"json",
+  			success:function(result){
+  				var rows = result.rows;
+  				var total = result.total;
+  				for(var i=0;i<rows.length;i++){
+  					var blogId = rows[i].id;
+  					var title = rows[i].title;
+  					var summary = rows[i].summary;
+  					var releaseDate = rows[i].releaseDate;
+  					var clickHit = rows[i].clickHit;
+  					var replyHit =rows[i].replyHit;
+  					createBlog(title,summary,releaseDate,blogId,clickHit,replyHit);
+  				}
+  			},
+  			error:function(){
+  				alert("博客加载失败,请刷新试试");
+  			}
+  		});
+  	})
+  	//创建博客DIV
+  	function createBlog(title,summary,releaseDate,blogId,clickHit,replyHit){
+  		var sdiv="";
+  		sdiv+='<div class="post-preview">';
+  		sdiv+='<a href="article.jsp?blogId=';
+  		sdiv+=blogId+'\">';
+  		sdiv+='<h2 class="post-title">'
+  		sdiv+=title;
+  		sdiv+='</h2><h3 class="post-subtitle">';
+  		sdiv+=summary;
+  		sdiv+='</h3></a><p class="post-meta">Posted by<a href="#">&nbsp;高永强&nbsp;</a>on ';
+  		sdiv+=releaseDate;
+  		sdiv+='&nbsp;&nbsp;&nbsp;&nbsp;阅读(';
+  		sdiv+=clickHit;
+  		sdiv+=')&nbsp;&nbsp;评论(';
+  		sdiv+=replyHit;
+  		sdiv+=')';
+  		sdiv+='</p></div><hr>';
+		var $div=$(sdiv);
+		$div.data("blogId",blogId);
+		$("#blog").append($div);
+  	}
+  //加载更多博客
+  	var page=1;
+  	function moreBlog(){
+  		page=page+1;
+  		$.ajax({
+  			url:"${pageContext.request.contextPath}/admin/blog/list.do",
+  			type:"post",
+  			data:{"page":page,"rows":3},
+  			dataType:"json",
+  			success:function(result){
+  				var rows = result.rows;
+  				var total = result.total;
+  				for(var i=0;i<rows.length;i++){
+  					var blogId = rows[i].id;
+  					var title = rows[i].title;
+  					var summary = rows[i].summary;
+  					var releaseDate = rows[i].releaseDate;
+  					var clickHit = rows[i].clickHit;
+  					var replyHit =rows[i].replyHit;
+  					createBlog(title,summary,releaseDate,blogId,clickHit,replyHit);
+  				}
+  				if(rows.length==0){
+  					alert("没有更多博客了!");
+  				}
+  			},
+  			error:function(){
+  				alert("博客添加失败,请刷新试试");
+  			}
+  		});
+  	}
+  	//根据日期查询
+  	function findByDate(){
+  		
+  	} */
+  	
+  </script>
 </body>
 </html>

@@ -97,4 +97,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getBlogCountByBlogType" parameterType="Integer" resultType="Integer">
 		select count(*) from t_blog where type_id=#{blogTypeId}
 	</select>
+	
+	<select id="getPreviousBlog" parameterType="Integer" resultMap="BlogResult">
+		select * from t_blog where id&lt;#{id} order by id desc limit 1
+	</select>
+	
+	<select id="getNextBlog" parameterType="Integer" resultMap="BlogResult">
+		select * from t_blog where id&gt;#{id} order by id limit 1
+	</select>
 </mapper>

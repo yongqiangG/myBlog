@@ -7,4 +7,6 @@ public interface BloggerService {
 	public Blogger getBloggerByUserName(String userName);
 	/**更新博主信息*/
 	public Integer updateBlogger(Blogger blogger);
+	/**获取博主信息*/
+	public Blogger getBlogger();
 }

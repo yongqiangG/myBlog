@@ -54,8 +54,19 @@ public class BloggerAdminController {
 	@RequestMapping("/find")
 	public String find(HttpServletResponse res) throws Exception {
 		Blogger blogger = (Blogger)SecurityUtils.getSubject().getSession().getAttribute(CommonParam.Current_User);
-		JSONObject jsonObject = JSONObject.fromObject(blogger);
-		ResponseUtil.writeRes(res, jsonObject);
+		JSONObject result = JSONObject.fromObject(blogger);
+		ResponseUtil.writeRes(res, result);
+		return null;
+	}
+	/**
+	 * 获取不带密码的博主信息
+	 */
+	@RequestMapping("getBloggerMsg")
+	public String getBloggerMsg(HttpServletResponse res) throws Exception {
+		Blogger blogger = bloggerService.getBloggerByUserName("admin");
+		blogger.setPassword(null);
+		JSONObject result = JSONObject.fromObject(blogger);
+		ResponseUtil.writeRes(res, result);
 		return null;
 	}
 }

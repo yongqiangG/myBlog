@@ -228,7 +228,7 @@ a {
 			<DIV
 				style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
 				<P style="margin: 0px 35px 20px 45px;">
-					<SPAN style="float: left;">Johnny的博客系统</SPAN> 
+					<SPAN style="float: left;"><a href="${pageContext.request.contextPath}/index.html">Johnny的博客系统</a></SPAN> 
 					<span><font color="red" id="errorMsg">${errorInfo }</font></span>
 					<SPAN
 						style="float: right;"> 

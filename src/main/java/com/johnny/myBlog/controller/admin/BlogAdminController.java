@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.johnny.myBlog.entity.Blog;
 import com.johnny.myBlog.entity.PageBean;
+import com.johnny.myBlog.lucene.BlogIndex;
 import com.johnny.myBlog.service.BlogService;
 import com.johnny.myBlog.util.DateJsonValueProcessor;
 import com.johnny.myBlog.util.ResponseUtil;
@@ -31,6 +32,8 @@ import net.sf.json.JsonConfig;
 public class BlogAdminController {
 	@Autowired
 	private BlogService service;
+	
+	private BlogIndex blogIndex = new BlogIndex();
 	/**
 	 * 保存博客
 	 */
@@ -39,8 +42,10 @@ public class BlogAdminController {
 		int saveResult = 0;
 		if(blog.getId()==null) {
 			saveResult = service.add(blog);
+			blogIndex.addIndex(blog);
 		}else {
 			saveResult = service.update(blog);
+			blogIndex.updateIndex(blog);
 		}
 		JSONObject result = new JSONObject();
 		if(saveResult>=1) {
@@ -57,7 +62,8 @@ public class BlogAdminController {
 	 */
 	@RequestMapping("/list")
 	public String list(@RequestParam(value="page",required=false)String page,
-			@RequestParam(value="rows",required=false)String rows,Blog blog,HttpServletResponse res) throws Exception {
+			@RequestParam(value="rows",required=false)String rows,Blog blog,
+			HttpServletResponse res) throws Exception {
 		PageBean pageBean = new PageBean(Integer.valueOf(page),Integer.valueOf(rows));
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("start", pageBean.getStart());
@@ -83,8 +89,8 @@ public class BlogAdminController {
 	@RequestMapping("/findById")
 	public String findById(@RequestParam("id")String id,HttpServletResponse res) throws Exception {
 		Blog blog = service.getBlogById(Integer.parseInt(id));
-		JSONObject jsonObject = JSONObject.fromObject(blog);
-		ResponseUtil.writeRes(res, jsonObject);
+		JSONObject result = JSONObject.fromObject(blog);
+		ResponseUtil.writeRes(res, result);
 		return null;
 	}
 	/**
@@ -96,6 +102,7 @@ public class BlogAdminController {
 		int deleteResult = 0;
 		for(int i=0;i<strIds.length;i++) {
 			deleteResult = service.delete(Integer.parseInt(strIds[i]));
+			blogIndex.deleteIndex(strIds[i]);
 		}
 		JSONObject result = new JSONObject();
 		if(deleteResult!=0) {

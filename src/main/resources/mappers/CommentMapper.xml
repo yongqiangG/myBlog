@@ -44,8 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getComments" parameterType="Map" resultMap="CommentResult">
 		select * from t_comment 
 		<where>
-			<if test="blog_id!=null">
-				and blog_id=#{blog.id}
+			<if test="blogId!=null">
+				and blog_id=#{blogId}
 			</if>
 			<if test="state!=null">
 				and state=#{state}

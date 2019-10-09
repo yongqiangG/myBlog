@@ -1,4 +1,8 @@
 package com.johnny.myBlog.util;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 字符串工具类
  * @author johnny
@@ -24,5 +28,25 @@ public class StringFormatUtil {
 		}
 		return false;
 	}
-	
+	/**
+	 * 字符串空判断
+	 */
+	public static Boolean isEmpty(String str) {
+		if(str==null || "".equals(str)) {
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * 
+	 */
+	public static List<String> filterSpace(List<String> list){
+		List<String> resultList = new ArrayList<String>();
+		for(String l:list) {
+			if(isNotEmpty(l)) {
+				resultList.add(l);
+			}
+		}
+		return resultList;
+	}
 }

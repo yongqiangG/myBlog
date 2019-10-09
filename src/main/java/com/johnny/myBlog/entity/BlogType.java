@@ -19,7 +19,14 @@ public class BlogType implements Serializable{
 	/**优先级序号*/
 	private String orderNum;
 	/**博客类型数量*/
-	private Integer count;
+	private Integer blogCount;
+	
+	public Integer getBlogCount() {
+		return blogCount;
+	}
+	public void setBlogCount(Integer blogCount) {
+		this.blogCount = blogCount;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -38,15 +45,10 @@ public class BlogType implements Serializable{
 	public void setOrderNum(String orderNum) {
 		this.orderNum = orderNum;
 	}
-	public Integer getCount() {
-		return count;
-	}
-	public void setCount(Integer count) {
-		this.count = count;
-	}
+
 	@Override
 	public String toString() {
-		return "BlogType [id=" + id + ", typeName=" + typeName + ", orderNum=" + orderNum + ", count=" + count + "]";
+		return "BlogType [id=" + id + ", typeName=" + typeName + ", orderNum=" + orderNum + ", blogCount=" + blogCount + "]";
 	}
 	
 }

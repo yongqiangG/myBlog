@@ -7,4 +7,6 @@ public interface BloggerDao {
 	public Blogger getBloggerByName(String userName);
 	/**更新博主个人信息*/
 	public Integer updateBlogger(Blogger blogger);
+	/**获取博主信息*/
+	public Blogger getBlogger();
 }

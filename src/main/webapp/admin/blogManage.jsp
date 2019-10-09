@@ -12,6 +12,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 <script>
+	//点击标题弹出用户预览页面
+	function formatTitle(val,row){
+		return "<a target='_blank' href='${pageContext.request.contextPath}/article/"+row.id+".html'>"+val+"</a>";
+	}
+
 	//博客类型id转为博客类型名称
 	function formatBlogType(val,row){
 		return val.typeName;
@@ -65,7 +70,7 @@
 	<tr>
 		<th field="cb" checkbox="true" align="center"></th>
 		<th field="id" width="20" align="center">编号</th>
-		<th field="title" width="200" align="center">博客标题</th>
+		<th field="title" width="200" align="center" formatter="formatTitle">博客标题</th>
 		<th field="releaseDate" width="50" align="center">发布日期</th>
 		<th field="blogType" width="50" align="center" formatter="formatBlogType">博客类型</th>
 	</tr>

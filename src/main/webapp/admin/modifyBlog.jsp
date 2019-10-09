@@ -44,7 +44,7 @@
 		} else if(content==null || content==''){
 			$.messager.alert("系统提示","博客内容不能为空");
 		} else {
-			$.post("${pageContext.request.contextPath}/admin/blog/save.do",{'id':'${param.id}','title':title,'content':content,'blogType.id':blogTypeId,'summary':summary,'keyWord':keyWord},
+			$.post("${pageContext.request.contextPath}/admin/blog/save.do",{'id':'${param.id}','title':title,'content':content,'blogType.id':blogTypeId,'summary':summary,'keyWord':keyWord,'contentWithoutTag':UE.getEditor("editor").getContentTxt()},
 				function(result){
 				if(result.success){
 					$.messager.alert("系统提示","博客发布成功");

@@ -35,8 +35,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getBlogTypeWithoutParam" resultMap="BlogTypeResult">
-		select t2.id,t2.typeName,count(t1.id) as blogCount from t_blog t1 right join
-		t_blogtype t2 on t1.type_id=t1.id group by t2.typeName order by t2.orderNum
+		select t2.id,t2.typeName,count(t1.id) as blogCount from t_blog t1 right join 
+		t_blogtype t2 on t1.type_id=t2.id group by t2.typeName order by t2.orderNum
 	</select>
 	
 	<select id="getBlogTypeByParam" parameterType="Map" resultMap="BlogTypeResult">

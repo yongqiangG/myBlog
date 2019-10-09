@@ -17,4 +17,15 @@ public class DateUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
 		return sdf.format(date);
 	}
+	/**
+	 * 
+	 */
+	public static String formatDate(Date date,String format) {
+		String result = "";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		if(date!=null) {
+			result = sdf.format(date);
+		}
+		return result;
+	}
 }
