@@ -1,5 +1,7 @@
 # myBlog
 我的博客项目
+## 项目环境
+Tomcat8+JDK1.8
 ## 项目相关技术
 >1. 使用Spring+Springmvc+Mybatis架构;
 >2. 使用Mysql数据库,数据库连接池使用阿里巴巴的Druid;
