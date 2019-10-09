@@ -12,6 +12,8 @@ Tomcat8.5+JDK1.8+Mysql5.6
 >7. 使用Lucene实现全文检索功能,以及检索内容的高亮显示
 >8. 后台博客的提交使用百度的Ueditor编辑器,实现了图片上传接收
 ## 项目预览图
+- 博客封面
+![博客封面](https://github.com/yongqiangG/myBlog/blob/master/src/main/webapp/static/userImages/2019-10-10_000601.png)
 - 博客展示页面
 ![博客展示页面](https://github.com/yongqiangG/myBlog/blob/master/src/main/webapp/static/userImages/2019-10-09_233723.png)
 - 博客详情页
