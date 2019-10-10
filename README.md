@@ -31,3 +31,7 @@ Tomcat8.5+JDK1.8+Mysql5.6
 ![博客后台管理页面](https://github.com/yongqiangG/myBlog/blob/master/src/main/webapp/static/userImages/2019-10-09_234117.png)
 ![博客后台管理页面](https://github.com/yongqiangG/myBlog/blob/master/src/main/webapp/static/userImages/2019-10-09_234142.png)
 ![博客后台管理页面](https://github.com/yongqiangG/myBlog/blob/master/src/main/webapp/static/userImages/2019-10-09_234213.png)
+#### 技术支持
+- 个人微信号：gaoyongqiang6283
+- 个人QQ：874891756
+- 个人邮箱:874891756@qq.com或johnny.gor10@gmail.com
