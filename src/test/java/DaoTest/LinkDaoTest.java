@@ -13,6 +13,7 @@ import com.johnny.myBlog.entity.Link;
 public class LinkDaoTest {
 	String[] conf = {"spring-mvc.xml","applicationContext.xml"};
 	ApplicationContext ac = new ClassPathXmlApplicationContext(conf);
+	// test add link
 	@Test
 	public void test1() {
 		LinkDao dao = ac.getBean("linkDao",LinkDao.class);
@@ -22,6 +23,7 @@ public class LinkDaoTest {
 		link.setOrderNum(3);
 		dao.add(link);
 	}
+	// test update link
 	@Test
 	public void test2() {
 		LinkDao dao = ac.getBean("linkDao",LinkDao.class);
@@ -31,11 +33,13 @@ public class LinkDaoTest {
 		link.setId(8);
 		dao.update(link);
 	}
+	// test delete link
 	@Test
 	public void test3() {
 		LinkDao dao =ac.getBean("linkDao",LinkDao.class);
 		dao.delete(8);
 	}
+	// test query link
 	@Test
 	public void test4() {
 		LinkDao dao =ac.getBean("linkDao",LinkDao.class);
@@ -44,6 +48,7 @@ public class LinkDaoTest {
 		map.put("size", 10);
 		dao.getLink(map);
 	}
+	// test query link count
 	@Test 
 	public void test5() {
 		LinkDao dao = ac.getBean("linkDao",LinkDao.class);
