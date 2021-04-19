@@ -205,7 +205,6 @@
 	</dependency>
 	
 	<!-- 添加百度编辑器ueditor支持 -->
-	<!-- 还有几个maven仓库中没有，我放到lib下了 -->
 	<dependency>
 	    <groupId>commons-fileupload</groupId>
 	    <artifactId>commons-fileupload</artifactId>
