@@ -9,6 +9,7 @@ import com.johnny.myBlog.service.BloggerService;
 public class BloggerServiceTest {
 	String[] conf = {"spring-mvc.xml","applicationContext.xml"};
 	ApplicationContext ac = new ClassPathXmlApplicationContext(conf);
+	// test for login
 	@Test
 	public void test1() {
 		BloggerService service = ac.getBean("bloggerService",BloggerService.class);
